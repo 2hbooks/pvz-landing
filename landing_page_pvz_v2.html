@@ -1152,7 +1152,7 @@ footer{
   function loadVisiblePages(idx){
     var imgs = document.querySelectorAll('#reader-track .lazy-page');
     [idx, idx+1, idx+2].forEach(function(i){
-      if(i>=0 && i<imgs.length && imgs[i].getAttribute('data-src') && !imgs[i].src){
+      if(i>=0 && i<imgs.length && imgs[i].getAttribute('data-src') && !imgs[i].getAttribute('src')){
         imgs[i].src = imgs[i].getAttribute('data-src');
       }
     });
@@ -1164,6 +1164,7 @@ footer{
   window.selectSeries = function(series){
     curSeries=series; curPage=0;
     buildTrack(series);
+    loadVisiblePages(0);
     buildDots(series);
     updateHeader();
     document.querySelectorAll('.spick').forEach(function(btn){
