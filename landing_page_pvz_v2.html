@@ -1536,56 +1536,7 @@ function handleSubmit(e) {
 }
 
 
-// ── READER JS ──
-(function() {
-  const track   = document.getElementById('reader-track');
-  const dots    = document.querySelectorAll('.rdot');
-  const label   = document.getElementById('page-label');
-  const btnPrev = document.getElementById('btn-prev');
-  const btnNext = document.getElementById('btn-next');
-  const tapPrev = document.getElementById('tap-prev');
-  const tapNext = document.getElementById('tap-next');
-  const total   = dots.length;
-  let cur = 0;
-  let touchStartX = 0, touchStartY = 0;
 
-  function goTo(n) {
-    if (n < 0 || n >= total) return;
-    cur = n;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
-    label.textContent = `${cur + 1} / ${total}`;
-    btnPrev.disabled = cur === 0;
-    btnNext.disabled = cur === total - 1;
-  }
-
-  btnPrev.addEventListener('click', () => goTo(cur - 1));
-  btnNext.addEventListener('click', () => goTo(cur + 1));
-  tapPrev.addEventListener('click', () => goTo(cur - 1));
-  tapNext.addEventListener('click', () => goTo(cur + 1));
-
-  // Touch swipe
-  const vp = document.getElementById('reader-vp');
-  vp.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-  vp.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      dx < 0 ? goTo(cur + 1) : goTo(cur - 1);
-    }
-  }, { passive: true });
-
-  // Keyboard
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') goTo(cur + 1);
-    if (e.key === 'ArrowLeft')  goTo(cur - 1);
-  });
-
-  goTo(0);
-})();
 
 // Smooth scroll for anchors
 document.querySelectorAll('a[href^="#"]').forEach(a => {
