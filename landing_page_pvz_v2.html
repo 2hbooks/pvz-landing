@@ -710,6 +710,79 @@ footer{
   .origin-banner{flex-direction:column;text-align:center;}
   .footer-top{flex-direction:column;}
 }
+
+  .series-tab {
+    background: rgba(255,255,255,.06);
+    border: 2px solid rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 10px 8px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    transition: all .2s;
+    line-height: 1.4;
+  }
+  .series-tab small { font-weight: 400; color: #a5d6a7; font-size: 11px; }
+  .series-tab.active {
+    background: rgba(245,158,11,.18);
+    border-color: #F59E0B;
+    color: #F59E0B;
+  }
+  .series-tab.active small { color: #fcd34d; }
+  .vol-picker {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .vol-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #F59E0B;
+  }
+  .btn-chon-bo {
+    background: rgba(245,158,11,.15);
+    border: 1px solid rgba(245,158,11,.4);
+    border-radius: 6px;
+    color: #F59E0B;
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-chon-bo:hover { background: rgba(245,158,11,.3); }
+  .vol-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .vol-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #d1fae5;
+    cursor: pointer;
+    padding: 5px 6px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all .15s;
+  }
+  .vol-item:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15); }
+  .vol-item input[type=checkbox] { accent-color: #F59E0B; width: 14px; height: 14px; }
+  .vol-item:has(input:checked) {
+    background: rgba(245,158,11,.12);
+    border-color: rgba(245,158,11,.4);
+    color: #fcd34d;
+  }
+
 </style>
 </head>
 <body>
@@ -1331,13 +1404,7 @@ footer{
             </div>
           </div>
         </div>
-        <div class="price-summary-box">
-          <h4>📊 Bảng Giá Nhanh</h4>
-          <div class="price-row-item">Thế Giới Khủng Long <strong>84.550đ–961.200đ/bộ</strong></div>
-          <div class="price-row-item">Thế Giới Robot <strong>90.250đ–513.000đ/bộ</strong></div>
-          <div class="price-row-item">Câu Đố Bí Ẩn <strong>90.250đ–427.500đ/bộ</strong></div>
-          <div class="price-row-item">Hỏi Đáp Khoa Học <strong>93.100đ/tập</strong></div>
-        </div>
+        
       </div>
 
       <div class="reveal reveal-delay-1">
@@ -1347,7 +1414,9 @@ footer{
             <p>Xác nhận trong vòng 24 giờ làm việc</p>
             <div class="form-badge">🔒 Bảo mật thông tin tuyệt đối</div>
           </div>
-          <form id="order-form" onsubmit="handleSubmit(event)">
+          <form id="order-form" onsubmit="handleOrderSubmit(event)">
+
+            <!-- Thông tin liên hệ -->
             <div class="form-group">
               <label class="form-label">Họ và tên <span>*</span></label>
               <input class="form-input" type="text" id="f-name" placeholder="Nguyễn Văn A" required>
@@ -1360,32 +1429,101 @@ footer{
               <label class="form-label">Địa chỉ nhận hàng <span>*</span></label>
               <textarea class="form-input" id="f-address" rows="2" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố" required></textarea>
             </div>
+
+            <!-- Chọn bộ sách -->
             <div class="form-group">
-              <label class="form-label">Sản phẩm muốn mua <span>*</span></label>
-              <select class="form-input" id="f-product" required>
-                <option value="">-- Chọn sản phẩm --</option>
-                <optgroup label="🦕 Thế Giới Khủng Long">
-                  <option value="kl_tap">Mua từng tập — 84.550đ/tập (−5%)</option>
-                  <option value="kl_bo">Cả bộ 12 tập — 961.200đ </option>
-                </optgroup>
-                <optgroup label="🤖 Thế Giới Robot">
-                  <option value="rb_tap">Mua từng tập — 90.250đ/tập (−5%)</option>
-                  <option value="rb_bo">Cả bộ 6 tập — 513.000đ </option>
-                </optgroup>
-                <optgroup label="🧩 Câu Đố Bí Ẩn">
-                  <option value="cd_tap">Mua từng tập — 90.250đ/tập (−5%)</option>
-                  <option value="cd_bo">Cả bộ 5 tập — 427.500đ </option>
-                </optgroup>
-                <optgroup label="🔬 Hỏi Đáp Khoa Học">
-                  <option value="hd_tap">Mua từng tập — 93.100đ/tập (−5%)</option>
-                </optgroup>
-                <option value="combo">🎁 Combo nhiều bộ — Tư vấn riêng</option>
-              </select>
+              <label class="form-label">Chọn bộ sách <span>*</span></label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+                <button type="button" class="series-tab" data-series="kl" onclick="toggleSeries('kl')">
+                  🦕 Khủng Long<br><small>12 tập</small>
+                </button>
+                <button type="button" class="series-tab" data-series="robot" onclick="toggleSeries('robot')">
+                  🤖 Robot<br><small>6 tập</small>
+                </button>
+                <button type="button" class="series-tab" data-series="caudo" onclick="toggleSeries('caudo')">
+                  🧩 Câu Đố Bí Ẩn<br><small>5 tập</small>
+                </button>
+                <button type="button" class="series-tab" data-series="hoidap" onclick="toggleSeries('hoidap')">
+                  🔬 Hỏi Đáp KH<br><small>4 tập</small>
+                </button>
+              </div>
             </div>
+
+            <!-- Volume picker (hiện ra khi chọn bộ) -->
+            <div id="vol-kl" class="vol-picker" style="display:none;">
+              <div class="vol-picker-header">
+                <span>🦕 Chọn tập Khủng Long</span>
+                <button type="button" onclick="selectAll('kl')" class="btn-chon-bo">✓ Chọn cả bộ</button>
+              </div>
+              <div class="vol-grid">
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 1"> Tập 1</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 2"> Tập 2</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 3"> Tập 3</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 4"> Tập 4</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 5"> Tập 5</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 6"> Tập 6</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 7"> Tập 7</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 8"> Tập 8</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 9"> Tập 9</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 10"> Tập 10</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 11"> Tập 11</label>
+                <label class="vol-item"><input type="checkbox" name="kl" value="KL Tập 12"> Tập 12</label>
+              </div>
+            </div>
+
+            <div id="vol-robot" class="vol-picker" style="display:none;">
+              <div class="vol-picker-header">
+                <span>🤖 Chọn tập Robot</span>
+                <button type="button" onclick="selectAll('robot')" class="btn-chon-bo">✓ Chọn cả bộ</button>
+              </div>
+              <div class="vol-grid">
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 1"> Tập 1</label>
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 2"> Tập 2</label>
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 3"> Tập 3</label>
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 4"> Tập 4</label>
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 5"> Tập 5</label>
+                <label class="vol-item"><input type="checkbox" name="robot" value="Robot Tập 6"> Tập 6</label>
+              </div>
+            </div>
+
+            <div id="vol-caudo" class="vol-picker" style="display:none;">
+              <div class="vol-picker-header">
+                <span>🧩 Chọn tập Câu Đố Bí Ẩn</span>
+                <button type="button" onclick="selectAll('caudo')" class="btn-chon-bo">✓ Chọn cả bộ</button>
+              </div>
+              <div class="vol-grid" style="grid-template-columns:1fr 1fr;">
+                <label class="vol-item"><input type="checkbox" name="caudo" value="Câu Đố - Các nền văn minh cổ"> Các nền văn minh cổ</label>
+                <label class="vol-item"><input type="checkbox" name="caudo" value="Câu Đố - Nghệ Thuật"> Nghệ Thuật</label>
+                <label class="vol-item"><input type="checkbox" name="caudo" value="Câu Đố - Vũ Trụ"> Vũ Trụ</label>
+                <label class="vol-item"><input type="checkbox" name="caudo" value="Câu Đố - Địa Lý"> Địa Lý</label>
+                <label class="vol-item"><input type="checkbox" name="caudo" value="Câu Đố - Động thực vật"> Động thực vật</label>
+              </div>
+            </div>
+
+            <div id="vol-hoidap" class="vol-picker" style="display:none;">
+              <div class="vol-picker-header">
+                <span>🔬 Chọn tập Hỏi Đáp Khoa Học</span>
+                <button type="button" onclick="selectAll('hoidap')" class="btn-chon-bo">✓ Chọn cả bộ</button>
+              </div>
+              <div class="vol-grid" style="grid-template-columns:1fr 1fr;">
+                <label class="vol-item"><input type="checkbox" name="hoidap" value="Hỏi Đáp - Vật lý vui nhộn"> Vật lý vui nhộn</label>
+                <label class="vol-item"><input type="checkbox" name="hoidap" value="Hỏi Đáp - Động thực vật quý hiếm"> Động thực vật quý hiếm</label>
+                <label class="vol-item"><input type="checkbox" name="hoidap" value="Hỏi Đáp - Sinh tồn hoang dã"> Sinh tồn hoang dã</label>
+                <label class="vol-item"><input type="checkbox" name="hoidap" value="Hỏi Đáp - Động vật lưỡng cư"> Động vật lưỡng cư</label>
+              </div>
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div id="order-summary" style="display:none;background:rgba(21,128,61,.1);border:1px solid rgba(21,128,61,.3);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#166534;">
+              <strong>📋 Đơn hàng của bạn:</strong>
+              <div id="summary-items" style="margin-top:6px;line-height:1.8;"></div>
+            </div>
+
             <div class="form-group">
               <label class="form-label">Ghi chú (tùy chọn)</label>
-              <textarea class="form-input" id="f-note" rows="2" placeholder="VD: mua tập 1–3 Khủng Long, tặng sinh nhật..."></textarea>
+              <textarea class="form-input" id="f-note" rows="2" placeholder="VD: tặng sinh nhật, cần giao gấp..."></textarea>
             </div>
+
             <button type="submit" class="form-btn">🛒 Gửi Đơn Đặt Hàng</button>
             <p class="form-privacy">🔒 Thông tin được bảo mật, không chia sẻ bên thứ ba</p>
           </form>
@@ -1424,14 +1562,8 @@ footer{
         <div class="faq-q"><div class="faq-q-icon">👶</div>Phù hợp cho trẻ mấy tuổi?</div>
         <p class="faq-a">Trẻ từ 6–14 tuổi. Câu Đố phù hợp 6–10 tuổi; Robot & Hỏi Đáp hay hơn với 8–14 tuổi; Khủng Long thì mọi lứa tuổi đều mê!</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q"><div class="faq-q-icon">🎁</div>Có gói quà tặng không?</div>
-        <p class="faq-a">Có! Ghi chú "gói quà" trong form đặt hàng, chúng tôi đóng gói đẹp kèm thiệp miễn phí. Rất phù hợp làm quà sinh nhật cho các bé.</p>
-      </div>
-      <div class="faq-item reveal reveal-delay-1">
-        <div class="faq-q"><div class="faq-q-icon">🏫</div>Mua số lượng lớn cho trường học?</div>
-        <p class="faq-a">Liên hệ để được báo giá sỉ ưu đãi dành cho trường học, thư viện, câu lạc bộ đọc sách. Chiết khấu tốt hơn khi mua từ 20 cuốn.</p>
-      </div>
+      
+      
     </div>
   </div>
 </section>
@@ -1538,7 +1670,97 @@ function handleSubmit(e) {
 
 
 
-// Smooth scroll for anchors
+
+  // ── ORDER FORM JS ──
+  var activeSeries = {};
+
+  window.toggleSeries = function(s) {
+    activeSeries[s] = !activeSeries[s];
+    var tab = document.querySelector('.series-tab[data-series="'+s+'"]');
+    var picker = document.getElementById('vol-'+s);
+    if (activeSeries[s]) {
+      tab.classList.add('active');
+      picker.style.display = 'block';
+    } else {
+      tab.classList.remove('active');
+      picker.style.display = 'none';
+      // uncheck all in this series
+      document.querySelectorAll('input[name="'+s+'"]').forEach(function(cb){ cb.checked = false; });
+    }
+    updateSummary();
+  };
+
+  window.selectAll = function(s) {
+    document.querySelectorAll('input[name="'+s+'"]').forEach(function(cb){ cb.checked = true; });
+    updateSummary();
+  };
+
+  function updateSummary() {
+    var items = [];
+    ['kl','robot','caudo','hoidap'].forEach(function(s) {
+      var checked = document.querySelectorAll('input[name="'+s+'"]:checked');
+      checked.forEach(function(cb){ items.push(cb.value); });
+    });
+    var summary = document.getElementById('order-summary');
+    var summaryItems = document.getElementById('summary-items');
+    if (items.length > 0) {
+      summaryItems.innerHTML = items.map(function(i){ return '• '+i; }).join('<br>');
+      summary.style.display = 'block';
+    } else {
+      summary.style.display = 'none';
+    }
+  }
+
+  // Listen to checkbox changes
+  document.addEventListener('change', function(e) {
+    if (e.target.type === 'checkbox') updateSummary();
+  });
+
+  window.handleOrderSubmit = function(e) {
+    e.preventDefault();
+    var items = [];
+    ['kl','robot','caudo','hoidap'].forEach(function(s) {
+      document.querySelectorAll('input[name="'+s+'"]:checked').forEach(function(cb){ items.push(cb.value); });
+    });
+    if (items.length === 0) {
+      alert('Vui lòng chọn ít nhất 1 tập sách!');
+      return;
+    }
+    var data = {
+      name:    document.getElementById('f-name').value,
+      phone:   document.getElementById('f-phone').value,
+      address: document.getElementById('f-address').value,
+      products: items.join(', '),
+      note:    document.getElementById('f-note').value,
+      time:    new Date().toLocaleString('vi-VN')
+    };
+
+    // Gửi tới Google Apps Script (thay URL bên dưới bằng Web App URL thực tế)
+    var GS_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+    // Nếu chưa có URL thật thì hiển thị thành công luôn (demo mode)
+    if (GS_URL.indexOf('YOUR_SCRIPT_ID') !== -1) {
+      document.getElementById('order-form').style.display = 'none';
+      document.getElementById('form-success-msg').style.display = 'block';
+      console.log('Order data (demo):', data);
+      return;
+    }
+
+    fetch(GS_URL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }).then(function() {
+      document.getElementById('order-form').style.display = 'none';
+      document.getElementById('form-success-msg').style.display = 'block';
+    }).catch(function() {
+      // fallback
+      document.getElementById('order-form').style.display = 'none';
+      document.getElementById('form-success-msg').style.display = 'block';
+    });
+  };
+
+
+  // Smooth scroll for anchors
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
