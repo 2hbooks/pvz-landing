@@ -216,7 +216,7 @@ section{padding:80px 32px;}
 /* AWARDS */
 .awards-section{background:var(--white);}
 .awards-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
 }
 .award-card{
   background:linear-gradient(145deg,var(--gray50),var(--white));
@@ -687,7 +687,7 @@ footer{
   .hero-visual{margin:0 auto;max-width:500px;width:100%;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
   .countries-grid{grid-template-columns:repeat(3,1fr);}
-  .awards-grid{grid-template-columns:repeat(2,1fr);}
+  .awards-grid{grid-template-columns:repeat(2,1fr);} /* tablet: 2 cột */
   .order-layout{grid-template-columns:1fr;gap:40px;}
   .form-panel{position:static;}
   .faq-grid{grid-template-columns:1fr;}
@@ -832,8 +832,8 @@ footer{
 <div class="stats-bar">
   <div class="stats-inner container">
     <div class="stat-cell reveal">
-      <div class="stat-number">72+</div>
-      <div class="stat-label">Triệu bản đã bán toàn cầu</div>
+      <div class="stat-number" style="font-size:clamp(20px,2.2vw,30px);">72.000.000</div>
+      <div class="stat-label">Bản sách đã bán tại Trung Quốc</div>
     </div>
     <div class="stat-cell reveal reveal-delay-1">
       <div class="stat-number">6</div>
@@ -910,23 +910,18 @@ footer{
     <div class="awards-grid">
       <div class="award-card reveal">
         <div class="award-icon-wrap">🏆</div>
-        <div class="award-name">Tác Phẩm Bán Chạy Nhất</div>
-        <div class="award-desc">Giải "Tác Phẩm Bán Chạy Nhất" tại Hội Chợ Sách Thiếu Nhi Bắc Kinh — sự kiện xuất bản lớn nhất châu Á.</div>
+        <div class="award-name">Top 100 Sách Tốt Nhất Trung Quốc</div>
+        <div class="award-desc">Lọt danh sách "Top 100 cuốn sách tốt nhất" do Mạng lưới Bình luận Văn học Nghệ thuật Trung Quốc (China Literature & Art Review Network) bình chọn.</div>
       </div>
       <div class="award-card reveal reveal-delay-1">
-        <div class="award-icon-wrap">📚</div>
-        <div class="award-name">100 Cuốn Sách Thiếu Nhi Xuất Sắc</div>
-        <div class="award-desc">Được bình chọn trong danh sách "100 Cuốn Sách Thiếu Nhi Xuất Sắc" của Trung Quốc — chuẩn mực giáo dục quốc gia.</div>
+        <div class="award-icon-wrap">🎖️</div>
+        <div class="award-name">Giải Thưởng Hoạt Hình Xuất Sắc 2019</div>
+        <div class="award-desc">Nhận giải thưởng hạng mục Hoạt hình do Booknews Sina (trực thuộc Chính phủ Trung Quốc) trao tặng năm 2019.</div>
       </div>
       <div class="award-card reveal reveal-delay-2">
-        <div class="award-icon-wrap">🌟</div>
-        <div class="award-name">Top Ấn Phẩm Nổi Bật Frankfurt</div>
-        <div class="award-desc">Lọt Top ấn phẩm thiếu nhi nổi bật tại Hội Chợ Sách Frankfurt — sự kiện gặp gỡ của toàn ngành xuất bản thế giới.</div>
-      </div>
-      <div class="award-card reveal reveal-delay-3">
-        <div class="award-icon-wrap">🎓</div>
-        <div class="award-name">Sách Khuyến Khích STEM</div>
-        <div class="award-desc">Chính thức trong danh mục sách khuyến khích đọc trong chương trình giáo dục STEM tại nhiều trường tiểu học.</div>
+        <div class="award-icon-wrap">📖</div>
+        <div class="award-name">Bestseller 10 Năm Liên Tiếp</div>
+        <div class="award-desc">Xếp hạng Bestseller liên tục 10 năm trên China Writers Network (Mạng lưới nhà văn Trung Quốc) — ghi nhận tính đến năm 2020.</div>
       </div>
     </div>
   </div>
